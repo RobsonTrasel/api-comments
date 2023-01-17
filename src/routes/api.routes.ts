@@ -1,11 +1,8 @@
 import express, {Request, Response} from 'express'
-import multer from 'multer'
 import client  from '../data/connections/database.config'
 
 const router = express.Router()
-const upload = multer({
-    dest: '.uploads/'
-})
+
 
 router.get('/comments', async (req: Request, res: Response) => {
     const limit = Number(req.query.limit) || 10;
@@ -19,7 +16,8 @@ router.get('/comments', async (req: Request, res: Response) => {
       }
 })
 
-router.post('/comments', upload.single('photo'), async (req: Request, res: Response) => {
+
+router.post('/comments', async (req: Request, res: Response) => {
     try {
         const {
             name, comment
@@ -31,11 +29,9 @@ router.post('/comments', upload.single('photo'), async (req: Request, res: Respo
             return res.status(400).json({ error: 'Comentario é obrigatorios' });
 
         }
-
-        const photo = req.file ? req.file.filename : null
-        const sql = 'INSERT INTO comments (name, comment, photo) VALUES ($1, $2, $3)'
+        const sql = 'INSERT INTO comments (name, comment) VALUES ($1, $2, $3)'
         const values = [
-            name, comment, photo
+            name, comment
         ]
         await client.query(sql, values)
         res.status(201).send({
