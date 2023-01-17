@@ -1,0 +1,17 @@
+POST http://localhost:3000/api/comments
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="name"
+
+Rodriguinho
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="comment"
+
+Voce é bão pra caralho
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="photo"; filename="photo.jpg"
+Content-Type: image/jpeg
+
+<BINARY_DATA>
+----WebKitFormBoundary7MA4YWxkTrZu0gW--
