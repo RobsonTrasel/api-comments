@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import client from '../../data/connections/database.config'
 
 class CommentsController {
+    
     async getComments(req: Request, res: Response) {
         const limit = Number(req.query.limit) || 10;
         const offset = Number(req.query.offset) || 0;
@@ -20,13 +21,15 @@ class CommentsController {
                 name, comment
             } = req.body
 
+            console.log(name, comment)
+
             if (!name) {
                 return res.status(400).json({ error: 'Nome é obrigatorio' });
             } else if(!comment) {
                 return res.status(400).json({ error: 'Comentario é obrigatorios' });
             }
 
-            const sql = 'INSERT INTO comments (name, comment) VALUES ($1, $2, $3)'
+            const sql = 'INSERT INTO comments (name, comment) VALUES ($1, $2)'
             const values = [
                 name, comment
             ]
