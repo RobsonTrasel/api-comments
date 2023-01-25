@@ -1,14 +1,12 @@
 import { Request, Response } from "express";
-import client from "../../data/connections/database.config";
+import { Comment } from "../../models/comment";
 
 class CommentsController {
   async getComments(req: Request, res: Response) {
     const limit = Number(req.query.limit) || 10;
     const offset = Number(req.query.offset) || 0;
-    const result = await client.query(
-      `SELECT * FROM comments WHERE status = 'aprovado' LIMIT ${limit} OFFSET ${offset}`
-    );
-    res.status(200).json(result.rows);
+    const comments = await Comment.getComments(limit, offset)
+    res.status(200).json(comments);
   }
 
   async createComments(req: Request, res: Response) {
@@ -22,44 +20,18 @@ class CommentsController {
       return res.status(400).json({ error: "Comentario é obrigatorios" });
     }
 
-    const sql = "INSERT INTO comments (name, comment) VALUES ($1, $2)";
-    const values = [name, comment];
-    await client.query(sql, values);
-    res.status(201).send({
-      message: "Comentario criado com sucesso!",
-    });
+    const result = await Comment.createComment(name, comment)
+    res.status(201).send(result);
   }
 
   async setApproved(req: Request, res: Response) {
-    const commentId = req.params.id;
-
-    const result = await client.query(
-      `SELECT status FROM comments WHERE id = ${commentId}`
-    );
-
-    if (result.rows[0].status === "pendente") {
-      await client.query(
-        `UPDATE comments SET status = 'aprovado' WHERE id = ${commentId}`
-      );
-      res.status(200).send("Comentario foi aprovado com sucesso!");
-    } else {
-      res.status(400).send("Comentario ja foi aprovado ou rejeitado");
-    }
+    const result = await Comment.setApproved(req.body.commentId)
+    res.status(200).send(result)
   }
 
   async setRejected(req: Request, res: Response) {
-    const commentId = req.params.id;
-    const result = await client.query(
-      `SELECT status FROM comments WHERE id = ${commentId}`
-    );
-    if (result.rows[0].status === "pendente") {
-      await client.query(
-        `UPDATE comments SET status = 'rejected' WHERE id = ${commentId}`
-      );
-      res.status(200).send("Comentario foi rejeitado com sucesso");
-    } else {
-      res.status(400).send("Comentario ja foi aprovado ou rejeitado");
-    }
+    const result = await Comment.setRejected(req.body.commentId)
+    res.status(200).send(result)
   }
 }
 
