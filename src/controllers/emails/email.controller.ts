@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import nodemailer, { Transport, TransportOptions} from "nodemailer";
 import { google } from "googleapis";
+import { createMailOptions } from "../../data/config/emailOptions";
 
 const oauth2client = new google.auth.OAuth2(
   process.env.MAIL_CLIENT_ID,
@@ -42,17 +43,7 @@ class EmailController {
       }
     } as TransportOptions | Transport<unknown> );
 
-    const mailOptions = {
-      from: process.env.MAIL_USER,
-      to: "robson.trasel@gmail.com",
-      subject,
-      text: description,
-      html: `
-            <p> Nome: ${name} </p>
-            <p> Assunto: ${subject} </p>
-            <p> Descrição: ${description} </p>
-            `,
-    };
+    const mailOptions = createMailOptions(name, subject, description)
     await sender.sendMail(mailOptions);
     res.status(200).json({
       message: "Email enviado",
