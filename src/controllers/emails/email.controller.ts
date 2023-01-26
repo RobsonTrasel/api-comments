@@ -13,7 +13,17 @@ oauth2client.setCredentials({
 })
 
 class EmailController {
-  async enviarEmails(req: Request, res: Response) {
+  /**
+   * @function sendMails - Send email method
+   * @async
+   * @param {Request} req - Express request object
+   * @param {Response} req - Express response object
+   * @description This function is responsible for sending an email using the nodemailer library and the gmail service
+   * It gets the access token from the oauth2client object, creates a transport object and sets the necessary options   for sending the email.
+   * The function then sends the email with the provided options and sends a response with a message indicating that the email was sent.
+   * @throws Will throw an error if any of the required environment variables (MAIL_HOST, MAIL_CLIENT_ID, MAIL_CLIENT_SECRET, MAIL_USER, MAIL_PASSWORD) are missing or if any error occurs during the sending of the email.
+   */
+  async sendMails(req: Request, res: Response) {
     const accessToken = await oauth2client.getAccessToken()
 
     const { name, subject, description } = req.body;
