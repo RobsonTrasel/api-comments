@@ -6,18 +6,15 @@ class CommentsController {
     const limit = Number(req.query.limit) || 10;
     const offset = Number(req.query.offset) || 0;
     const comments = await Comment.getComments(limit, offset)
-    res.status(200).json(comments);
+    res.status(200).send(comments);
   }
 
   async createComments(req: Request, res: Response) {
     const { name, comment } = req.body;
-
-    console.log(name, comment);
-
     if (!name) {
-      return res.status(400).json({ error: "Nome é obrigatorio" });
+      return res.status(400).send({ error: "Nome é obrigatorio" });
     } else if (!comment) {
-      return res.status(400).json({ error: "Comentario é obrigatorios" });
+      return res.status(400).send({ error: "Comentario é obrigatorios" });
     }
 
     const result = await Comment.createComment(name, comment)
@@ -25,7 +22,7 @@ class CommentsController {
   }
 
   async setApproved(req: Request, res: Response) {
-    const result = await Comment.setApproved(req.body.commentId)
+    const result = await Comment.setApproved(req.body.commentId) 
     res.status(200).send(result)
   }
 
