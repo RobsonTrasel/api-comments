@@ -11,7 +11,7 @@ router.post('/comments', commentsController.createComments)
 router.put('/comments/approve/:id', convertIdToNumber ,commentsController.setApproved)
 router.put('/comments/reject/:id', convertIdToNumber ,commentsController.setRejected)
 router.post('/login', AuthController.login)
-router.post('/send-mail', emailController.enviarEmails)
+router.post('/send-mail', emailController.sendMails)
 
 
 export default router

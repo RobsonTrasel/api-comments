@@ -13,7 +13,8 @@ export class User {
 
         const isPasswordValid = await validatePassword(password, user.password)
 
+        if(!isPasswordValid) return null
+
         return user
     }
-
 }
