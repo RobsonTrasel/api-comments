@@ -3,7 +3,7 @@ import client from "../data/connections/database.config";
 export class Comment {
   static async getComments(limit: number, offset: number) {
     const result = await client.query(
-      `SELECT * FROM comments WHERE status = 'aprovado' LIMIT ${limit} OFFSET ${offset}`
+      `SELECT * FROM comments LIMIT ${limit} OFFSET ${offset}`
     );
     return result.rows;
   }
