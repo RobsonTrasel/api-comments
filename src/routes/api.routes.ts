@@ -8,8 +8,8 @@ const router = express.Router()
 
 router.get('/comments', commentsController.getComments)
 router.post('/comments', commentsController.createComments)
-router.put('/comments/approve/:id', convertIdToNumber ,commentsController.setApproved)
-router.put('/comments/reject/:id', convertIdToNumber ,commentsController.setRejected)
+router.put('/comments/approve/:id', commentsController.setApproved)
+router.put('/comments/reject/:id', commentsController.setRejected)
 router.post('/login', AuthController.login)
 router.post('/send-mail', emailController.sendMails)
 

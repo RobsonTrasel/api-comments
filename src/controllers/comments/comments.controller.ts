@@ -47,7 +47,8 @@ class CommentsController {
    * console.log(result)
    */
   async setApproved(req: Request, res: Response) {
-    const result = await Comment.setApproved(req.body.commentId) 
+    const id = Number(req.params.id)
+    const result = await Comment.setApproved(id) 
     res.status(200).send(result)
   }
 
@@ -63,7 +64,8 @@ class CommentsController {
    * console.log(result)
    */
   async setRejected(req: Request, res: Response) {
-    const result = await Comment.setRejected(req.body.commentId)
+    const id = Number(req.params.id)
+    const result = await Comment.setRejected(id)
     res.status(200).send(result)
   }
 }
