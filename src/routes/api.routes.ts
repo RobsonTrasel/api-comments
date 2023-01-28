@@ -1,7 +1,6 @@
 import express from 'express'
 import commentsController from '../controllers/comments/comments.controller'
 import emailController from '../controllers/emails/email.controller'
-import { convertIdToNumber } from '../middlewares/convertIdToNumber';
 import AuthController from '../controllers/auth/auth.controller';
 
 const router = express.Router()
