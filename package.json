@@ -30,6 +30,7 @@
     "typeorm": "^0.3.11"
   },
   "scripts": {
-    "dev": "ts-node-dev ./src/server/server.ts"
+    "dev": "ts-node-dev ./src/server/server.ts",
+    "start": "ts-node ./src/server/server.ts"
   }
 }
